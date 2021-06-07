@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" media="print" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="X-UA-Compatible" content="requiresActiveX=true" />
+<title>차트샘플</title>
+<link href="../front/css/dongbu.css" rel="stylesheet" />
+<!-- <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" /> -->
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/pubPlugin.js"></script>
+<script type="text/javascript" src="js/pc_pubCommon.js"></script>
+<style>
+
+h1{margin:60px 0;color:#000;font-size:25px;text-align:center}
+.table{margin-top:40px}
+.message{position:relative;margin-top:40px;padding:20px;border:solid 1px;display:block;box-sizing:border-box}
+
+.tblLegend {color:#606060}
+.tblLegend {width:100%;margin-top:12px}
+.tblLegend th {border-right:1px solid #dedede;text-align:left}
+.tblLegend td {padding-right:9px;border-right:1px solid #dedede;text-align:right}
+
+.chart-container{position:relative}
+.chart-wrapper:after{content:'';display:block;clear:both}
+.chart-wrapper canvas{float:left}
+
+.chart-period{overflow:hidden;margin-bottom:10px}
+.chart-period>li{float:left;font-size:13px;line-height:20px}
+.chart-period>li:before{content:'';display:inline-block;width:1px;height:12px;margin:-2px 8px 0;vertical-align:middle;background:#dadada}
+.chart-period>li:first-child:before{display:none}
+.chart-period>li a.on {color:#303030;font-family:'NanumBB'}
+.chart-period>li.btn{margin-left:10px}
+.chart-period>li.btn:before{display:none}
+
+.chart-legend{margin:15px 0 0 0;overflow:hidden}
+.chart-legend>li{display:block;float:left;margin:5px 0 0 0}
+.chart-legend.col2>li{width:50%}
+.chart-legend.inline{margin:0 0 0 -12px}
+.chart-legend.inline>li{display:inline-block;float:none;margin:10px 0 0 12px}
+
+.legend-pattern{display:inline-block}
+.legend-pattern:before{content:'';display:inline-block;width:12px;height:12px;margin:-2px 5px 0 0 ;vertical-align:middle;background-position:50% 50%;background-repeat:no-repeat}
+.legend-pattern.p1:before{background-image:url(./images/p1.jpg)}
+.legend-pattern.p2:before{background-image:url(./images/p2.jpg)}
+.legend-pattern.p3:before{background-image:url(./images/p3.jpg)}
+.legend-pattern.p4:before{background-image:url(./images/p4.jpg)}
+.legend-pattern.p5:before{background-image:url(./images/p5.jpg)}
+.legend-pattern.p6:before{background-image:url(./images/p6.jpg)}
+.legend-pattern.p7:before{background-image:url(./images/p7.jpg)}
+.legend-pattern.p8:before{background-image:url(./images/p8.jpg)}
+.legend-pattern.p9:before{background-image:url(./images/p9.jpg)}
+.legend-pattern.p10:before{background-image:url(./images/p10.jpg)}
+.legend-shape{display:inline-block}
+.legend-shape:before{content:'';display:inline-block;margin:-2px 5px 0 0 ;vertical-align:middle}
+.legend-shape.s1:before{width:0px;height:0px;border-bottom:7px solid #0ac9ac;border-right:4px solid transparent;border-left:4px solid transparent}
+.legend-shape.s2:before{width:7px;height:7px;background:#fc6b53}
+.legend-shape.s3:before{width:7px;height:7px;border-radius:100%;background:#156cbd}
+.legend-shape.s4:before{width:0px;height:0px;border-top:7px solid #1ac1f7;border-right:4px solid transparent;border-left:4px solid transparent}
+.legend-shape.s5:before{width:6px;height:6px;background:#9bc042;transform:rotate(45deg)}
+.legend-shape.s6:before{width:8px;height:3px;background:#cdcdce}
+
+</style>
+</head>
+
+<body style="background-color:#fff">
+
+<div id="wrapper" class="wrapper">
+    <div class="container" style="position:relative;padding:40px">
+        <pre class="message">  
+
+            차트 라이브러리 Chart.js : https://www.chartjs.org/samples/latest/
+            -캔버스 기반 차트 라이브러리 
+
+            그리드 라이브러리 Grid.js : https://gridjs.io/docs/examples/hello-world/
+
+        </pre>
+        <h1>기간별 수익률 <br> 바 차트 </h1>
+        <br>
+        <div class="chart-container">
+            <div class="chart-wrapper">
+                <canvas id="chart1" width="300" height="200"></canvas>
+                <canvas id="chart2" width="300" height="200"></canvas>
+            </div>
+            <table class="tblLegend" summary="기간별 수익률 테이블로 펀드와 BM의 내용을 나타냄" style="width:272px">
+                <caption>기간별 수익률</caption>
+                <colgroup><col width="20%" span="5"></colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row"><span class="legend-pattern p1">펀드</span></th>
+                    <td class="blue">-4.16</td>
+                    <td class="red">22.41</td>
+                    <td class="red">58.27</td>
+                    <td class="red">101.25</td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="legend-pattern p7">BM</span></th>
+                    <td class="blue">-1.64</td>
+                    <td class="red">10.40</td>
+                    <td class="red">32.34</td>
+                    <td class="red">69.53</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <pre class="message">  
+
+            차트 셋팅 
+            @param {Canvas Element} el
+            @param {Array} data
+            commonJs.main._setMultiAxisBarChart(el, data);
+            ex) commonJs.main._setMultiAxisBarChart($('#chart1'), chart1);
+
+
+
+            데이터 구조 : Array[Object1{}, Object2{}]
+            chart1: [
+                {
+                    //첫번째 범례 
+                    label: '펀드', //범례 명 
+                    data: [10.31, 26.77, 28.72, -75.93] //범례 데이터
+                },{
+                    //두번쨰 범례  
+                    label: 'BM', //범례 명  
+                    data: [3.93, 36.90, 6.85, 7.30]  //범례 데이터
+                } 
+            ]
+
+            * 범례 데이터 중 절대값이 가장 큰 수를 기준으로 min/max값 지정됩니다.(예시 차트의 75.93, -75.93)
+            * 기간별 수익률 차트의 x축 레이블은 1개월/1년/3년/5년으로 고정됩니다. 
+
+        </pre>
+        <h1>수익률 <br> 라인 차트, 그리드 테이블 </h1>
+
+        <div class="chart-container">
+            <ul class="chart-period">
+                <li><a href="#" class="on" onclick="event.preventDefault(); commonJs.main._setComboBarLineChart($('#chart3'), $('#table1'), commonJs.getDummyData.chart3_1month,1)">1개월</a></li>
+                <li><a href="#" onclick="event.preventDefault(); commonJs.main._setComboBarLineChart($('#chart3'), $('#table1'), commonJs.getDummyData.chart3_3month,3)">3개월</a></li>
+                <li><a href="#" onclick="event.preventDefault(); commonJs.main._setComboBarLineChart($('#chart3'), $('#table1'), commonJs.getDummyData.chart3_6month,6)">6개월</a></li>
+                <li><a href="#">1년</a></li>
+                <!-- <li class="btn"><a href="javascript:void(0);" id="chart_btn_02" class="btnType3 btnSmGrey1" title="차트 상세정보 팝업열림"><span>표로보기</span></a></li> -->
+            </ul>
+            <div class="chart-wrapper">
+                <canvas id="chart3" width="565" height="200"></canvas>
+            </div>
+            <ul class="chart-legend inline">
+                <li><span class="legend-shape s1">해당 펀드</span></li>
+                <li><span class="frmCheck"><input type="checkbox" id="chksample1" name="chksample" checked/><label for="chksample1"><span class="legend-shape s2">BM</span></label></span></li>
+                <li><span class="frmCheck"><input type="checkbox" id="chksample4" name="chksample" checked/><label for="chksample4"><span class="legend-shape s5">동일유형 평균</span></label></span></li>
+                <li><span class="frmCheck"><input type="checkbox" id="chksample5" name="chksample" checked/><label for="chksample5"><span class="legend-shape s6">설정액</span></label></span></li>
+            </ul>
+        </div>
+        <div id='table1' class='table'></div>
+
+        <pre class="message">  
+
+            차트/그리드 셋팅 
+            @param {Canvas Element} chartEl
+            @param {Element} tableEl 테이블 엘리먼트
+            @param {Array} dataList 데이터리스트
+            @param {Number} months 개월 수 (2개월 이상 데이터 보여줄 때 차트의 포인트 스타일을 사라지게 합니다.)
+            commonJs.main._setComboBarLineChart(chartEl, tableEl, dataList, months);
+            ex) commonJs.main._setComboBarLineChart($('#chart3'), $('#table1'), commonJs.getDummyData.chart3_1month, 1);
+
+            차트/그리드 업데이트 => 초기 셋팅과 동일합니다.
+            @param {Canvas Element} chartEl
+            @param {Element} tableEl 테이블 엘리먼트
+            @param {Array} dataList 데이터리스트
+            @param {Number} months 개월 수
+            commonJs.main._setComboBarLineChart(chartEl, tableEl, dataList, months);
+            ex) commonJs.main._setComboBarLineChart($('#chart3'), $('#table1'), commonJs.getDummyData.chart3_6month,6);
+
+
+            데이터 구조 : Array[Object1{}, Object2{}, ..Object5{} ] 
+
+            chart3: [
+                //날짜
+                {
+                    name: '날짜', // x축 레이블 명 
+                    data: ['2020.10.12', '2020.10.13', '2020.10.14', '2020.10.15', '2020.10.16', '2020.10.19', '2020.10.20', '2020.10.21', 
+                    '2020.10.22', '2020.10.23', '2020.10.26', '2020.10.27', '2020.10.28', '2020.10.29', '2020.10.30', '2020.11.02',
+                    '2020.11.03', '2020.11.04', '2020.11.05', '2020.11.06', '2020.11.09', '2020.11.10', '2020.11.11'] //레이블 데이터
+                },
+                //해당펀드
+                {
+                    name: '해당펀드', //범례 명 
+                    data: [29.7670872219, 32.5009123614, 34.7746467861, 33.7567401766, 32.4691772858, 29.1897121256, 29.6263294235,
+                    27.9594187773, 28.5017671009, 28.3595603053, 28.4132935123, 29.468132427, 27.0108661119, 27.6191984795, 22.244519234,
+                    23.8611699982, 21.6932919445, 22.7898495863, 24.7107464102, 29.1879178172, 31.531690474, 31.3010768274, 29.883369984] //범례 데이터
+                },
+                //BM
+                {
+                    name: 'BM', //범례 명 
+                    data: [15.1246831543, 17.128519559, 19.1042680005, 20.2880743876, 18.236052615, 16.6900247185, 16.5117453651,
+                    16.5274660586, 14.3087776649, 15.3010515039, 14.3463847806, 14.9431523175, 15.3392222389, 12.978151607, 12.1794511261,
+                    7.3605818624, 8.6432517061, 7.3254627034, 8.9769420196, 9.8551962728, 11.917004141, 14.0949304146, 14.0621038881] //범례 데이터
+                },
+                //동일유형 평균
+                {
+                    name: '동일유형 평균', //범례 명 
+                    data: [18.1254447798, 19.9386915722, 21.7456141336, 20.6728188789, 20.418996068, 19.1998320908, 19.4094485946,
+                    18.7592752603, 19.8157596633, 19.3176619685, 18.6983074774, 18.364750328, 17.1045961779, 16.8317980215, 15.1165491111,
+                    15.2312166765, 13.6042106669, 14.7397724548, 15.2468445024, 16.5322428603, 18.6529556115, 18.724639924, 19.800103333] //범례 데이터
+                },
+                //설정액
+                {
+                    name: '설정액', //범례 명 
+                    data: [438, 438, 438, 439, 439, 439, 440, 440, 440, 440, 441, 441, 441, 442, 443, 443, 443, 444, 444, 445, 446, 446,
+                    447] //범례 데이터
+                }
+            ]
+
+            * 첫번째 오브젝트(날짜)는 차트의 x축 눈금으로 들어갑니다.
+            * 마지막(5번째) 오브젝트(설정액)는 바 차트로 표현됩니다. 
+
+        </pre>
+        <h1>기준가 <br> 라인 차트, 그리드 테이블 </h1>
+        <div class="chart-container">
+            <ul class="chart-period">
+                <li><a href="#" class="on" onclick="event.preventDefault(); commonJs.main._setLineChart($('#chart4'), $('#table2'), commonJs.getDummyData.chart4_1month, 1);">1개월</a></li>
+                <li><a href="#" onclick="event.preventDefault(); commonJs.main._setLineChart($('#chart4'), $('#table2'), commonJs.getDummyData.chart4_3month, 3);">3개월</a></li>
+                <li><a href="#" >6개월</a></li>
+                <li><a href="#">3년</a></li>
+                <!-- <li class="btn"><a href="javascript:void(0);" id="chart_btn_02" class="btnType3 btnSmGrey1" title="차트 상세정보 팝업열림"><span>표로보기</span></a></li> -->
+            </ul>
+            <div class="chart-wrapper">
+                <canvas id="chart4" width="620" height="224"></canvas>
+            </div>
+            <ul class="chart-legend inline">
+                <li><span class="legend-shape s1">기준가</span></li>
+                <li><span class="legend-shape s2">설정액</span></li>
+                <li><span class="legend-shape s3">순자산액</span></li>
+            </ul>
+        </div>
+        <div id='table2' class='table'></div>
+
+        
+        <pre class="message">  
+
+            차트/그리드 셋팅 
+            @param {Canvas Element} chartEl 차트 엘리먼트
+            @param {Element} tableEl 테이블 엘리먼트
+            @param {Array} dataList 데이터리스트
+            @param {Number} months 개월 수
+            commonJs.main._setLineChart(chartEl, tableEl, dataList, months);
+            ex) commonJs.main._setLineChart($('#chart4'), $('#table2'), commonJs.getDummyData.chart4_1month, 1);
+
+            차트/그리드 업데이트 => 초기 셋팅과 동일합니다.
+            @param {Canvas Element} chartEl
+            @param {Element} tableEl 테이블 엘리먼트
+            @param {Array} dataList 데이터리스트
+            @param {Number} months 개월 수
+            commonJs.main._setLineChart(chartEl, tableEl, dataList, months);
+            ex) commonJs.main._setLineChart($('#chart4'), $('#table2'), commonJs.getDummyData.chart4_3month, 3);
+
+            데이터 구조 : Array[Object1{}, Object2}, ..Object6{} ] 
+
+            chart4: [
+                //기준일자
+                {
+                    name: '기준일자', // x축 레이블 명 
+                    data: ['20.10.06', '20.10.07', '20.10.08', '20.10.12', '20.10.13', '20.10.14', '20.10.15', '20.10.16', '20.10.19',
+                    '20.10.20', '20.10.21', '20.10.22', '20.10.23', '20.10.26', '20.10.27', '20.10.28', '20.10.29', '20.10.30', '20.11.02',
+                    '20.11.03', '20.11.04', '20.11.05'] //레이블 데이터
+                },
+                //기준가
+                {
+                    name: '기준가', //범례 명 
+                    data: [1961.18, 1990.94, 1963.42, 1991.25, 2033.20, 2068.09, 2071.29, 2050.04, 2029.79, 2036.65, 2010.46, 2010.68,
+                    2013.14, 2020.84, 2037.44, 1998.77, 2014.15, 1943.26, 1963.15, 1928.79, 1946.17, 1975.73] //범례 데이터
+                },
+                //증감(기준가)
+                {
+                    name: '증감(기준가)',
+                    data: [6.03, 0.43, 0.50, -1.82, 47.83, 34.42, 19.62, -11.01, -8.35, 0.63, -2.46, 28.57, -8.84, -8.19, -24.43, -9.56,
+                    1.46, 29.88, 1.02, -26.41, 22.91, 17.48]
+                },
+                //설정액
+                {
+                    name: '설정액', //범례 명 
+                    data: [438,437,438,438,438,438,439,439,439,440,440,440,440,441,441,441,442,443,443,443,444,444] //범례 데이터
+                },
+                //순자산액
+                {
+                    name: '순자산액', //범례 명 
+                    data: [858,870,859,872,891,906,908,900,891,895,885,885,885,891,898,881,890,860,870,855,864,878] //범례 데이터
+                },
+                //과표기준가
+                {
+                    name: '과표기준가',
+                    data: [1442.46, 1442.89, 1443.39, 1441.57, 1489.40, 1523.82, 1543.44, 1532.43, 1524.08, 1524.71, 1522.25, 1550.82,
+                    1541.98, 1533.79, 1509.36, 1499.80, 1501.26, 1531.14, 1532.16, 1505.75,1528.66,1546.14]
+                }
+            ]
+
+            * 첫번째 오브젝트(기준일자)는 차트의 x축 눈금으로 들어갑니다.
+            * 3번째 오브젝트(증감), 6번쨰 오브젝트(과표기준가)는 차트데이터에 적용되지 않고 그리드 데이터에만 표시됩니다.
+
+        </pre>
+        <h1>자산구성 <br> 도넛 차트, 그리드 테이블 </h1>
+        <div class="chart-container" style="width:240px">
+            <div class="chart-wrapper">
+                <canvas id="chart5" width="240" height="240"></canvas>
+            </div>
+            <ul class="chart-legend col2">
+                <li><span class="legend-pattern p1">채권서물순포지션</span></li>
+                <li><span class="legend-pattern p2">국내채권</span></li>
+                <li><span class="legend-pattern p3">국내주식</span></li>
+                <li><span class="legend-pattern p4">해외채권</span></li>
+                <li><span class="legend-pattern p5">해외주식</span></li>
+                <li><span class="legend-pattern p6">펀드</span></li>
+                <li><span class="legend-pattern p7">유동성</span></li>
+                <li><span class="legend-pattern p8">주식선물포지션</span></li>
+            </ul>
+        </div>
+        <div id='table3' class='table'></div>
+
+        <pre class="message">  
+
+            차트/그리드 셋팅 
+            @param {Canvas Element} chartEl 차트 엘리먼트
+            @param {Element} tableEl 테이블 엘리먼트
+            @param {Array} dataList 데이터리스트 
+            commonJs.main._setDoughnut(chartEl, tableEl, dataList);
+            ex) commonJs.main._setDoughnut($('#chart5'), $('#table3'), commonJs.getDummyData.chart5);
+
+            * 해당 도넛차트 셋팅 경우 그리드는 header type row 형태로 제공됩니다.
+
+
+            데이터 구조 : Array[Object1{}, Object2}, ..Object8{} ] 
+
+            chart5: [
+            //채권선물순포지션
+            {
+                name: '채권선물순포지션', //범레 명 
+                data: [220] //범례 데이터
+            },
+            //국내채권
+            {
+                name: '국내채권',
+                data: [40]
+            },
+            //국내주식
+            {
+                name: '국내주식',
+                data: [40]
+            },
+            //해외채권
+            {
+                name: '해외채권',
+                data: [40]
+            },
+            //해외주식
+            {
+                name: '해외주식',
+                data: [40]
+            },
+            //펀드
+            {
+                name: '펀드',
+                data: [40]
+            },
+            //유동성
+            {
+                name: '유동성',
+                data: [40]
+            },
+            //주식선물포지션
+            {
+                name: '주식선물포지션',
+                data: [40]
+            }
+        ]
+
+        </pre>
+    </div>
+
+</div>
+
+</body>
+</html>
